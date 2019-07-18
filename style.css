@@ -1,5 +1,9 @@
 body {
   font-family: "Source Sans Pro", sans-serif;
+  background: url(http://paperlief.com/images/cool-backgrounds-hd-wallpaper-1.jpg)
+    no-repeat center center fixed;
+
+  background-size: cover;
 }
 .containerTitle {
   width: 100%;
@@ -17,7 +21,7 @@ body {
   text-align: center;
   font-size: 50px;
 }
-.mainContainer {
+#mainContainer {
   background-color: azure;
   margin: auto;
   width: 80%;
@@ -30,7 +34,7 @@ body {
 #questionContainer {
   background-color: blueviolet;
   width: 100%;
-  height: auto;
+  height: 75px;
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -45,7 +49,11 @@ body {
   display: flex;
   flex-direction: row;
 }
+
 .cta {
+  animation-name: insertButtons;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
   clear: both;
   margin: 20px;
   /* display: inline-block; */
@@ -53,6 +61,16 @@ body {
   border-bottom: 0;
   box-shadow: 0 0 0 2px #60e215 inset;
   background-color: rgba(36, 4, 180, 0.589);
+}
+@keyframes insertButtons {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 .cta:hover {
   box-shadow: 0 0 0 6rem #1748a3 inset;
@@ -84,4 +102,23 @@ a {
   text-align: center;
   margin: auto;
   font-size: 24px;
+  animation-name: insertImages;
+  animation-duration: 1.6s;
+  animation-iteration-count: 1;
+}
+@keyframes insertImages {
+  from {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#start {
+  width: 40%;
+  margin: auto;
+  height: 40px;
 }
