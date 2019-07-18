@@ -51,29 +51,64 @@ function addAnswers() {
     // append the html with new element
   }
 }
+
 var buttonStart = document.getElementById("start");
 buttonStart.addEventListener("click", start);
+
 function start() {
   interval = setInterval(startGame, 1000);
   creator();
   buttonStart.parentNode.removeChild(buttonStart);
 }
 
-function rightAnswer() {
+function wrongAnswer() {
   clearInterval(interval);
+
   var mainContainer = document.getElementById("mainContainer");
-  var divWrong = document.createElement("div");
-  divWrong.innerHTML = "WrongAnswer";
+  var div = document.createElement("div");
+  div.classList.add("wrongAnswerResponded");
+  var wrongBannerText = document.createElement("div");
+  var wrongBanner = document.createElement("div");
+  wrongBannerText.classList.add("wrongBannerText");
+  wrongBanner.classList.add("wrongBanner");
+  var wrongExplanantion = document.createElement("div");
+  var wrongExplanantionText = document.createElement("div");
+  wrongExplanantion.classList.add("wrongExplanation");
+  wrongExplanantionText.classList.add("wrongExplanationText");
+  wrongBannerText.innerHTML = "WrongAnswer";
+  wrongExplanantionText.innerHTML =
+    "The Eiffel Tower is located in Paris, France";
+
   while (mainContainer.children.length > 0) {
     mainContainer.removeChild(mainContainer.firstChild);
   }
-  mainContainer.appendChild(divWrong);
+  mainContainer.appendChild(div);
+  div.appendChild(wrongBanner);
+  wrongBanner.appendChild(wrongBannerText);
+  div.appendChild(wrongExplanantion);
+  wrongExplanantion.appendChild(wrongExplanantionText);
+  div.style =
+    "background: url(https://media.tacdn.com/media/attractions-splice-spp-674x446/06/74/ab/3e.jpg) no-repeat center center fixed; background-size: cover  ";
 }
+
+function rightAnswer() {
+  clearInterval(interval);
+
+  var mainContainer = document.getElementById("mainContainer");
+  var div = document.createElement("div");
+  div.innerHTML = "right Answer";
+  while (mainContainer.children.length > 0) {
+    mainContainer.removeChild(mainContainer.firstChild);
+  }
+  mainContainer.appendChild(div);
+}
+
 function removeAnswers() {
   while (ac.firstChild) {
     ac.removeChild(ac.firstChild);
   }
 }
+
 function startGame() {
   timer--;
   document.getElementById("timeContainer").innerHTML = timer + " Seconds Left!";
@@ -82,9 +117,14 @@ function startGame() {
     creator();
   }
 }
+
 function clickCreator() {
   for (z = 0; z < selector.length; z++) {
-    selector[z].firstChild.addEventListener("click", rightAnswer);
+    if (z === 1) {
+      selector[z].firstChild.addEventListener("click", rightAnswer);
+    } else {
+      selector[z].firstChild.addEventListener("click", wrongAnswer);
+    }
   }
 }
 
