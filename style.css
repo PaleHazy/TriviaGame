@@ -1,5 +1,5 @@
 body {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   background: url(http://paperlief.com/images/cool-backgrounds-hd-wallpaper-1.jpg)
     no-repeat center center fixed;
 
@@ -20,6 +20,16 @@ body {
   height: 75px;
   text-align: center;
   font-size: 50px;
+  animation-name: clockAni;
+  animation-duration: 0.3s;
+}
+@keyframes clockAni {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 #mainContainer {
   background-color: azure;
@@ -78,7 +88,7 @@ body {
 }
 .cta {
   text-transform: uppercase;
-  font-family: Calibre-Bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Calibre-Bold, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.2rem;
 }
 :focus,
@@ -125,11 +135,12 @@ a {
 
 .wrongAnswerResponded {
   display: flex;
-  color: white;
+  color: navajowhite;
   width: 100%;
   justify-content: center;
   flex-direction: column;
-  height: 700px;
+  height: 600px;
+  text-shadow: 3px 2.1px 3px black;
 }
 
 .wrongBanner {
@@ -155,4 +166,7 @@ a {
   text-align: center;
   width: 100%;
   height: max-content;
+}
+.nextButton {
+  margin: auto;
 }

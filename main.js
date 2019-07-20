@@ -1,18 +1,36 @@
-var question1 = "Where is the Eiffel Tower located?";
-var question2 = "How many fingers does one hand have?";
-var question3 = "What is the meaning of life?";
+var question1 = 'Where is the Eiffel Tower located?';
+var question2 = 'How many fingers does one hand have?';
+var question3 = 'What is the meaning of life?';
 var questions = [question1, question2, question3];
+var rightScore = 0;
+var wrongScore = 0;
+var answerExplanation = [
+  'The EiffelTower is located in Paris, France. <br> It is 324 metres tall (including antennas) and weighs 10,100 tonnes'
+];
+var p = 0;
+var pictures = [
+  'https://www.architectsjournal.co.uk/pictures/1240x826/8/0/4/3052804_Eiffel-Tower.jpg'
+];
 var answers = [
-  { a: "Italy", b: "France", c: "Germany", d: "United States" },
-  { a: "five", b: "two", c: "one", d: "none" }
+  { a: 'Italy', b: 'France', c: 'Germany', d: 'United States' },
+  { a: 'five', b: 'five', c: 'one', d: 'two' }
 ];
 // can set all right naswers to a : ... and then while appending set them to random
 var interval;
-var qc = document.getElementById("questionContainer");
-var ac = document.getElementById("answersContainer");
+var qc = document.getElementById('questionContainer');
+var ac = document.getElementById('answersContainer');
 var timer = 10;
 var i = 0;
 var bClick;
+var buttonStart = document.getElementById('start');
+buttonStart.addEventListener('click', start);
+var nextButton;
+
+function emptyDiv(container) {
+  while (container.children.length > 0) {
+    container.removeChild(container.firstChild);
+  }
+}
 
 function randomizer() {
   //var randomQuestionPicker = Math.floor(Math.random() * questions.length);
@@ -22,88 +40,103 @@ function randomizer() {
 
   return question;
 }
+
 function removeQuestion() {
-  qc.innerHTML = "";
+  var qc = document.getElementById('questionContainer');
+
+  qc.innerHTML = '';
 }
+
 function setQuestion() {
+  var qc = document.getElementById('questionContainer');
   qc.innerHTML = questions[i];
   console.log(this.question);
 }
+
+Array.prototype.shuffle = function() {
+  var input = this;
+
+  for (var s = input.length - 1; s >= 0; s--) {
+    var randomIndex = Math.floor(Math.random() * (i + 1));
+    var itemAtIndex = input[randomIndex];
+
+    input[randomIndex] = input[s];
+    input[s] = itemAtIndex;
+  }
+  return input;
+};
+
 function addAnswers() {
+  var ac = document.getElementById('answersContainer');
+
   var answersObj = answers[i];
   for (var j in answersObj) {
-    var answrCont = document.createElement("div");
-    answrCont.setAttribute("class", "miniAnswerContainer");
-    var newBtn = document.createElement("button");
-    var newTxt = document.createElement("div");
+    var answrCont = document.createElement('div');
+    answrCont.setAttribute('class', 'miniAnswerContainer');
+    var newBtn = document.createElement('button');
+    var newTxt = document.createElement('div');
     var value = answersObj[j];
-    newBtn.classList.add("cta", j);
+    newBtn.classList.add('cta', j);
 
-    newTxt.setAttribute("class", "buttonText");
-    newTxt.innerHTML = value;
+    newTxt.setAttribute('class', 'buttonText');
+    newTxt.innerHTML = value; // set this to a different key of the same array randomly and uniquely
     newBtn.innerHTML = j;
     answrCont.appendChild(newBtn);
     answrCont.appendChild(newTxt);
     ac.appendChild(answrCont);
-    console.log("j:", j);
+    console.log('j:', j);
 
     //build html element per answer
     // append the html with new element
   }
 }
+function clickCreator() {
+  var selector = document.getElementById('answersContainer').children;
 
-var buttonStart = document.getElementById("start");
-buttonStart.addEventListener("click", start);
+  for (z = 0; z < selector.length; z++) {
+    if (z === 1) {
+      selector[1].firstChild.addEventListener('click', rightAnswer);
+    } else {
+      selector[z].firstChild.addEventListener('click', wrongAnswer);
+    }
+  }
+}
 
 function start() {
+  timer = 10;
   interval = setInterval(startGame, 1000);
   creator();
-  buttonStart.parentNode.removeChild(buttonStart);
+
+  if (document.getElementById('start')) {
+    buttonStart.parentNode.removeChild(buttonStart);
+  }
 }
 
-function wrongAnswer() {
-  clearInterval(interval);
+function nextButtonF() {
+  var mainContainer = document.getElementById('mainContainer');
+  emptyDiv(mainContainer);
+  var tc = document.createElement('div');
+  var qc = document.createElement('div');
+  var ac = document.createElement('div');
+  qc.id = 'questionContainer';
+  ac.id = 'answersContainer';
+  tc.id = 'timeContainer';
+  mainContainer.appendChild(tc);
+  mainContainer.appendChild(qc);
+  mainContainer.appendChild(ac);
 
-  var mainContainer = document.getElementById("mainContainer");
-  var div = document.createElement("div");
-  div.classList.add("wrongAnswerResponded");
-  var wrongBannerText = document.createElement("div");
-  var wrongBanner = document.createElement("div");
-  wrongBannerText.classList.add("wrongBannerText");
-  wrongBanner.classList.add("wrongBanner");
-  var wrongExplanantion = document.createElement("div");
-  var wrongExplanantionText = document.createElement("div");
-  wrongExplanantion.classList.add("wrongExplanation");
-  wrongExplanantionText.classList.add("wrongExplanationText");
-  wrongBannerText.innerHTML = "WrongAnswer";
-  wrongExplanantionText.innerHTML =
-    "The Eiffel Tower is located in Paris, France";
-
-  while (mainContainer.children.length > 0) {
-    mainContainer.removeChild(mainContainer.firstChild);
-  }
-  mainContainer.appendChild(div);
-  div.appendChild(wrongBanner);
-  wrongBanner.appendChild(wrongBannerText);
-  div.appendChild(wrongExplanantion);
-  wrongExplanantion.appendChild(wrongExplanantionText);
-  div.style =
-    "background: url(https://media.tacdn.com/media/attractions-splice-spp-674x446/06/74/ab/3e.jpg) no-repeat center center fixed; background-size: cover  ";
+  start();
 }
 
-function rightAnswer() {
-  clearInterval(interval);
-
-  var mainContainer = document.getElementById("mainContainer");
-  var div = document.createElement("div");
-  div.innerHTML = "right Answer";
-  while (mainContainer.children.length > 0) {
-    mainContainer.removeChild(mainContainer.firstChild);
-  }
-  mainContainer.appendChild(div);
+function createNextButton() {
+  nextButton = document.createElement('button');
+  nextButton.classList.add('nextButton');
+  nextButton.innerHTML = 'NEXT';
+  nextButton.addEventListener('click', nextButtonF);
 }
 
 function removeAnswers() {
+  var ac = document.getElementById('answersContainer');
   while (ac.firstChild) {
     ac.removeChild(ac.firstChild);
   }
@@ -111,27 +144,20 @@ function removeAnswers() {
 
 function startGame() {
   timer--;
-  document.getElementById("timeContainer").innerHTML = timer + " Seconds Left!";
+  document.getElementById('timeContainer').innerHTML = timer + ' Seconds Left!';
   if (timer === 0) {
-    timer = 10;
-    creator();
-  }
-}
-
-function clickCreator() {
-  for (z = 0; z < selector.length; z++) {
-    if (z === 1) {
-      selector[z].firstChild.addEventListener("click", rightAnswer);
-    } else {
-      selector[z].firstChild.addEventListener("click", wrongAnswer);
-    }
+    wrongAnswer();
   }
 }
 
 //var keys = Object.keys([objectHere])
 //sample val: ["a", "b", "c", "d"]
-var selector = document.getElementById("answersContainer").children;
 function creator() {
+  // if () {
+  //   // document.createElement('div')
+  //   // document.getElementById('questionContainer');
+  //   console.log('oiiiiiiii boiiii');
+  // }
   removeQuestion();
   setQuestion();
   removeAnswers();
@@ -149,3 +175,62 @@ function creator() {
 //array (machine gun magazine)
 //loop splicing at index 0 until the length of the array is equal to zero
 //is a machine gun loop
+
+function wrongAnswer() {
+  clearInterval(interval);
+  var mainContainer = document.getElementById('mainContainer');
+  var div = document.createElement('div');
+  div.classList.add('wrongAnswerResponded');
+  var wrongBannerText = document.createElement('div');
+  var wrongBanner = document.createElement('div');
+  wrongBannerText.classList.add('wrongBannerText');
+  wrongBanner.classList.add('wrongBanner');
+  var wrongExplanantion = document.createElement('div');
+  var wrongExplanantionText = document.createElement('div');
+  wrongExplanantion.classList.add('wrongExplanation');
+  wrongExplanantionText.classList.add('wrongExplanationText');
+  wrongBannerText.innerHTML = 'WrongAnswer';
+  wrongExplanantionText.innerHTML = answerExplanation;
+  emptyDiv(mainContainer);
+  mainContainer.appendChild(div);
+  div.appendChild(wrongBanner);
+  wrongBanner.appendChild(wrongBannerText);
+  div.appendChild(wrongExplanantion);
+  wrongExplanantion.appendChild(wrongExplanantionText);
+  div.style = `background: url(${
+    pictures[p]
+  }) no-repeat center center fixed; background-size: cover;`;
+  p++;
+
+  createNextButton();
+  div.appendChild(nextButton);
+}
+function rightAnswer() {
+  clearInterval(interval);
+  var mainContainer = document.getElementById('mainContainer');
+  var div = document.createElement('div');
+  div.classList.add('wrongAnswerResponded');
+  var wrongBannerText = document.createElement('div');
+  var wrongBanner = document.createElement('div');
+  wrongBannerText.classList.add('wrongBannerText');
+  wrongBanner.classList.add('wrongBanner');
+  var wrongExplanantion = document.createElement('div');
+  var wrongExplanantionText = document.createElement('div');
+  wrongExplanantion.classList.add('wrongExplanation');
+  wrongExplanantionText.classList.add('wrongExplanationText');
+  wrongBannerText.innerHTML = 'Right Answer!';
+  wrongExplanantionText.innerHTML = answerExplanation;
+  emptyDiv(mainContainer);
+  mainContainer.appendChild(div);
+  div.appendChild(wrongBanner);
+  wrongBanner.appendChild(wrongBannerText);
+  div.appendChild(wrongExplanantion);
+  wrongExplanantion.appendChild(wrongExplanantionText);
+  div.style = `background: url(${
+    pictures[p]
+  }) no-repeat center center fixed; background-size: cover;`;
+  p++;
+
+  createNextButton();
+  div.appendChild(nextButton);
+}
