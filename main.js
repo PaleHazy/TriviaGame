@@ -1,6 +1,8 @@
 var question1 = 'Where is the Eiffel Tower located?';
 var question2 = 'How many fingers does one hand have?';
-var question3 = 'What is the meaning of life?';
+var question3 =
+  'Before Mount Everest was discovered, what was the highest mountain in the world?';
+var question4 = '';
 var questions = [question1, question2, question3];
 var rightScore = 0;
 var wrongScore = 0;
@@ -28,6 +30,8 @@ var answers = [
     d: 'The Alps'
   }
 ];
+var correctAnswerLocator;
+
 // can set all right naswers to a : ... and then while appending set them to random
 var interval;
 var qc = document.getElementById('questionContainer');
@@ -79,42 +83,42 @@ function addAnswers() {
 
   var answersObj = answers[i];
   var arrayShuffled = [];
-  // var miniCounter = 0;
-  // var letters = ['a', 'b', 'c', 'd'];
+
   for (var j in answersObj) {
     var answrCont = document.createElement('div');
     answrCont.setAttribute('class', 'miniAnswerContainer');
     var newBtn = document.createElement('button');
-    var newTxt = document.createElement('div');
     var value = answersObj[j];
     arrayShuffled.push(value);
-    // if (j === 'b') {
-
-    // }
     newBtn.classList.add('cta', j);
-    newTxt.setAttribute('class', 'buttonText');
-    newTxt.innerHTML = value; // set this to a different key of the same array randomly and uniquely
     newBtn.innerHTML = j;
-    // miniCounter++;
     answrCont.appendChild(newBtn);
-    answrCont.appendChild(newTxt);
     ac.appendChild(answrCont);
     console.log('j:', j);
-    if (j === 'b') {
+  }
+
+  shuffle(arrayShuffled);
+  console.log('arrayShuffled:', arrayShuffled);
+  correctAnswerLocator = answers[i].b;
+  var optionsArray = ['a', 'b', 'c', 'd'];
+  for (var counter1 = 0; counter1 < arrayShuffled.length; counter1++) {
+    var ac = document.getElementById('answersContainer');
+    var newTxt = document.createElement('div');
+    newTxt.classList.add('buttonText');
+    newTxt.innerHTML = arrayShuffled[counter1];
+    ac.children[counter1].append(newTxt);
+
+    if (arrayShuffled[counter1] === correctAnswerLocator) {
+      // google: assertions, separation of concepts
       document
-        .getElementsByClassName(j)[0]
+        .getElementsByClassName(optionsArray[counter1])[0]
         .addEventListener('click', rightAnswer);
     } else {
       document
-        .getElementsByClassName(j)[0]
+        .getElementsByClassName(optionsArray[counter1])[0]
         .addEventListener('click', wrongAnswer);
     }
   }
-  shuffle(arrayShuffled);
-  console.log('arrayShuffled:', arrayShuffled);
-  // for (var i = 0; i < arrayShuffled.length; i++) {}
-
-  // for (var i = 0; i < arrayShuffled.length; i++) {}
 }
 
 function start() {
@@ -191,6 +195,48 @@ function creator() {
 //loop splicing at index 0 until the length of the array is equal to zero
 //is a machine gun loop
 
+function rightWrongMiddle() {
+  var middleDiv = document.createElement('div');
+  middleDiv.classList.add('middleDiv');
+  var referenceNode = document.getElementsByClassName('wrongExplanation')[0];
+  var containerNode = document.getElementsByClassName(
+    'wrongAnswerResponded'
+  )[0];
+  console.log('containerNode:', containerNode);
+  console.log('referenceNode:', referenceNode);
+  containerNode.insertBefore(middleDiv, referenceNode);
+  raw();
+  // var wrongBannerText = document.getElementsByClassName('wrongBanner')[0];
+  // console.log('wrongBannerText:', wrongBannerText);
+  //   if (wrongBannerText.innerText === 'Right Answer!') {
+  //     console.log('ayyee buoi');
+  //     raw();
+  //   } else {
+  //     console.log('no buoi');
+  //     war();
+  //   }
+}
+function raw() {
+  var x = 0;
+
+  var middleDiv = document.getElementsByClassName('middleDiv')[0];
+
+  var wrongBannerText = document.getElementsByClassName('wrongBanner')[0];
+  while (x != rightScore + wrongScore) {
+    if (wrongBannerText.innerText === 'Right Answer!') {
+      var boxCreator = document.createElement('div');
+      boxCreator.classList.add('miniBoxCorrect');
+      middleDiv.append(boxCreator);
+      x++;
+    } else {
+      var boxCreator = document.createElement('div');
+      boxCreator.classList.add('miniBoxWrong');
+      middleDiv.append(boxCreator);
+      x++;
+    }
+  }
+}
+
 function wrongAnswer() {
   clearInterval(interval);
   var mainContainer = document.getElementById('mainContainer');
@@ -217,9 +263,10 @@ function wrongAnswer() {
     pictures[p]
   }) no-repeat center center fixed; background-size: cover;`;
   p++;
-
+  wrongScore++;
   createNextButton();
   div.appendChild(nextButton);
+  rightWrongMiddle();
 }
 function rightAnswer() {
   clearInterval(interval);
@@ -247,7 +294,8 @@ function rightAnswer() {
     pictures[p]
   }) no-repeat center center fixed; background-size: cover;`;
   p++;
-
+  rightScore++;
   createNextButton();
   div.appendChild(nextButton);
+  rightWrongMiddle();
 }

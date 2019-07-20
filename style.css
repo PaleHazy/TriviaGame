@@ -170,3 +170,37 @@ a {
 .nextButton {
   margin: auto;
 }
+.middleDiv {
+  height: 50px;
+  width: 100%;
+  background-color: red;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.miniBoxCorrect {
+  background-color: #60e215;
+  animation-name: randw;
+  animation-duration: 1s;
+  height: 45px;
+  width: 45px;
+  margin-left: 3px;
+}
+.miniBoxWrong {
+  background-color: #dfdf1b;
+  animation-name: randw;
+  animation-duration: 1s;
+  height: 45px;
+  width: 45px;
+  margin-left: 3px;
+}
+@keyframes randw {
+  from {
+    opacity: 0;
+    transform: translatex(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translatex(0);
+  }
+}
