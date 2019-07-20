@@ -70,36 +70,38 @@ function addAnswers() {
   var ac = document.getElementById('answersContainer');
 
   var answersObj = answers[i];
+  var arrayShuffled = [];
+  // var miniCounter = 0;
+  // var letters = ['a', 'b', 'c', 'd'];
   for (var j in answersObj) {
     var answrCont = document.createElement('div');
     answrCont.setAttribute('class', 'miniAnswerContainer');
     var newBtn = document.createElement('button');
     var newTxt = document.createElement('div');
+    arrayShuffled.push(value);
     var value = answersObj[j];
+    // if (j === 'b') {
+    // }
     newBtn.classList.add('cta', j);
-
     newTxt.setAttribute('class', 'buttonText');
     newTxt.innerHTML = value; // set this to a different key of the same array randomly and uniquely
     newBtn.innerHTML = j;
+    // miniCounter++;
     answrCont.appendChild(newBtn);
     answrCont.appendChild(newTxt);
     ac.appendChild(answrCont);
     console.log('j:', j);
-
-    //build html element per answer
-    // append the html with new element
-  }
-}
-function clickCreator() {
-  var selector = document.getElementById('answersContainer').children;
-
-  for (z = 0; z < selector.length; z++) {
-    if (z === 1) {
-      selector[1].firstChild.addEventListener('click', rightAnswer);
+    if (j === 'b') {
+      document
+        .getElementsByClassName(j)[0]
+        .addEventListener('click', rightAnswer);
     } else {
-      selector[z].firstChild.addEventListener('click', wrongAnswer);
+      document
+        .getElementsByClassName(j)[0]
+        .addEventListener('click', wrongAnswer);
     }
   }
+  // for (var i = 0; i < arrayShuffled.length; i++) {}
 }
 
 function start() {
@@ -162,7 +164,7 @@ function creator() {
   setQuestion();
   removeAnswers();
   addAnswers();
-  clickCreator();
+
   i++;
 }
 
