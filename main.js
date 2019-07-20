@@ -5,15 +5,28 @@ var questions = [question1, question2, question3];
 var rightScore = 0;
 var wrongScore = 0;
 var answerExplanation = [
-  'The EiffelTower is located in Paris, France. <br> It is 324 metres tall (including antennas) and weighs 10,100 tonnes'
+  'The EiffelTower is located in Paris, France. <br> It is 324 metres tall (including antennas) and weighs 10,100 tonnes',
+  'The finger count on a typical hand for a human specimen is set to the "digit" 5',
+  "It is Mount Everest (even though it hadn't been discovered, it still existed!) Mt. Everest is is Earth's highest mountain above sea level at 29,029′"
 ];
 var p = 0;
 var pictures = [
-  'https://www.architectsjournal.co.uk/pictures/1240x826/8/0/4/3052804_Eiffel-Tower.jpg'
+  'https://www.architectsjournal.co.uk/pictures/1240x826/8/0/4/3052804_Eiffel-Tower.jpg',
+  'https://media.istockphoto.com/photos/man-hand-picture-id490508272?k=6&m=490508272&s=612x612&w=0&h=Q4BhUUdRR8E4jD65vshcgzpha1eKwSa_G5Uu2lpV-pk=',
+  'https://coresites-cdn.factorymedia.com/mpora_new/wp-content/uploads/2019/04/Mount-Everest-Facts.jpg',
+  ''
 ];
+
+//
 var answers = [
   { a: 'Italy', b: 'France', c: 'Germany', d: 'United States' },
-  { a: 'five', b: 'five', c: 'one', d: 'two' }
+  { a: 'eight', b: 'five', c: 'one', d: 'two' },
+  {
+    a: 'Mount Kilimanjaro',
+    b: 'Mount Everest',
+    c: 'the Rockies',
+    d: 'The Alps'
+  }
 ];
 // can set all right naswers to a : ... and then while appending set them to random
 var interval;
@@ -43,28 +56,23 @@ function randomizer() {
 
 function removeQuestion() {
   var qc = document.getElementById('questionContainer');
-
   qc.innerHTML = '';
 }
 
 function setQuestion() {
   var qc = document.getElementById('questionContainer');
   qc.innerHTML = questions[i];
-  console.log(this.question);
 }
-
-Array.prototype.shuffle = function() {
-  var input = this;
-
-  for (var s = input.length - 1; s >= 0; s--) {
-    var randomIndex = Math.floor(Math.random() * (i + 1));
-    var itemAtIndex = input[randomIndex];
-
-    input[randomIndex] = input[s];
-    input[s] = itemAtIndex;
+function shuffle(a) {
+  var j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    x = a[i];
+    a[i] = a[j];
+    a[j] = x;
   }
-  return input;
-};
+  return a;
+}
 
 function addAnswers() {
   var ac = document.getElementById('answersContainer');
@@ -78,9 +86,10 @@ function addAnswers() {
     answrCont.setAttribute('class', 'miniAnswerContainer');
     var newBtn = document.createElement('button');
     var newTxt = document.createElement('div');
-    arrayShuffled.push(value);
     var value = answersObj[j];
+    arrayShuffled.push(value);
     // if (j === 'b') {
+
     // }
     newBtn.classList.add('cta', j);
     newTxt.setAttribute('class', 'buttonText');
@@ -101,6 +110,10 @@ function addAnswers() {
         .addEventListener('click', wrongAnswer);
     }
   }
+  shuffle(arrayShuffled);
+  console.log('arrayShuffled:', arrayShuffled);
+  // for (var i = 0; i < arrayShuffled.length; i++) {}
+
   // for (var i = 0; i < arrayShuffled.length; i++) {}
 }
 
@@ -192,7 +205,8 @@ function wrongAnswer() {
   wrongExplanantion.classList.add('wrongExplanation');
   wrongExplanantionText.classList.add('wrongExplanationText');
   wrongBannerText.innerHTML = 'WrongAnswer';
-  wrongExplanantionText.innerHTML = answerExplanation;
+  wrongExplanantionText.innerHTML = answerExplanation[p];
+
   emptyDiv(mainContainer);
   mainContainer.appendChild(div);
   div.appendChild(wrongBanner);
@@ -221,7 +235,8 @@ function rightAnswer() {
   wrongExplanantion.classList.add('wrongExplanation');
   wrongExplanantionText.classList.add('wrongExplanationText');
   wrongBannerText.innerHTML = 'Right Answer!';
-  wrongExplanantionText.innerHTML = answerExplanation;
+  wrongExplanantionText.innerHTML = answerExplanation[p];
+
   emptyDiv(mainContainer);
   mainContainer.appendChild(div);
   div.appendChild(wrongBanner);
