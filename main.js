@@ -2,20 +2,24 @@ var question1 = 'Where is the Eiffel Tower located?';
 var question2 = 'How many fingers does one hand have?';
 var question3 =
   'Before Mount Everest was discovered, what was the highest mountain in the world?';
-var question4 = '';
-var questions = [question1, question2, question3];
+var question4 = 'What is the largest sea in the world?';
+var questions = [question1, question2, question3, question4];
 var rightScore = 0;
 var wrongScore = 0;
 var answerExplanation = [
   'The EiffelTower is located in Paris, France. <br> It is 324 metres tall (including antennas) and weighs 10,100 tonnes',
   'The finger count on a typical hand for a human specimen is set to the "digit" 5',
-  "It is Mount Everest (even though it hadn't been discovered, it still existed!) Mt. Everest is is Earth's highest mountain above sea level at 29,029′"
+  "It is Mount Everest (even though it hadn't been discovered, it still existed!) Mt. Everest is is Earth's highest mountain above sea level at 29,029′",
+  'Common sea life that can be found in the Philippine Sea include sea snakes, octopus, moray eels, shark, and sea turtles.'
 ];
 var p = 0;
 var pictures = [
   'https://www.architectsjournal.co.uk/pictures/1240x826/8/0/4/3052804_Eiffel-Tower.jpg',
   'https://media.istockphoto.com/photos/man-hand-picture-id490508272?k=6&m=490508272&s=612x612&w=0&h=Q4BhUUdRR8E4jD65vshcgzpha1eKwSa_G5Uu2lpV-pk=',
   'https://coresites-cdn.factorymedia.com/mpora_new/wp-content/uploads/2019/04/Mount-Everest-Facts.jpg',
+  'https://rltjs.files.wordpress.com/2011/07/philippine-sea-east-and-west.jpg?w=468&h=390&zoom=2',
+  '',
+  '',
   ''
 ];
 
@@ -28,6 +32,12 @@ var answers = [
     b: 'Mount Everest',
     c: 'the Rockies',
     d: 'The Alps'
+  },
+  {
+    a: 'The Mediterranean',
+    b: 'Philippine Sea',
+    c: 'Adriatic Sea',
+    d: 'The Dead Sea'
   }
 ];
 var correctAnswerLocator;
@@ -195,16 +205,17 @@ function creator() {
 //loop splicing at index 0 until the length of the array is equal to zero
 //is a machine gun loop
 
+var middleDiv = document.createElement('div');
+middleDiv.classList.add('middleDiv');
+document.body.append(middleDiv);
 function rightWrongMiddle() {
-  var middleDiv = document.createElement('div');
-  middleDiv.classList.add('middleDiv');
-  var referenceNode = document.getElementsByClassName('wrongExplanation')[0];
-  var containerNode = document.getElementsByClassName(
-    'wrongAnswerResponded'
-  )[0];
-  console.log('containerNode:', containerNode);
-  console.log('referenceNode:', referenceNode);
-  containerNode.insertBefore(middleDiv, referenceNode);
+  // var referenceNode = document.getElementsByClassName('wrongExplanation')[0];
+  // var containerNode = document.getElementsByClassName(
+  //   'wrongAnswerResponded'
+  // )[0];
+  // console.log('containerNode:', containerNode);
+  // console.log('referenceNode:', referenceNode);
+  // containerNode.insertBefore(middleDiv, referenceNode);
   raw();
   // var wrongBannerText = document.getElementsByClassName('wrongBanner')[0];
   // console.log('wrongBannerText:', wrongBannerText);
@@ -216,24 +227,26 @@ function rightWrongMiddle() {
   //     war();
   //   }
 }
+
+function boxCreate() {}
 function raw() {
   var x = 0;
 
   var middleDiv = document.getElementsByClassName('middleDiv')[0];
-
+  var boxesPattern = [];
   var wrongBannerText = document.getElementsByClassName('wrongBanner')[0];
-  while (x != rightScore + wrongScore) {
-    if (wrongBannerText.innerText === 'Right Answer!') {
-      var boxCreator = document.createElement('div');
-      boxCreator.classList.add('miniBoxCorrect');
-      middleDiv.append(boxCreator);
-      x++;
-    } else {
-      var boxCreator = document.createElement('div');
-      boxCreator.classList.add('miniBoxWrong');
-      middleDiv.append(boxCreator);
-      x++;
-    }
+  var boxCreator = document.createElement('div');
+  if (wrongBannerText.innerText === 'Right Answer!') {
+    boxCreator.classList.add('miniBoxCorrect');
+    boxCreator.classList.add('glowGreen');
+    middleDiv.append(boxCreator);
+    x++;
+  } else {
+    var boxCreator = document.createElement('div');
+    boxCreator.classList.add('miniBoxWrong');
+    boxCreator.classList.add('glowRed');
+    middleDiv.append(boxCreator);
+    x++;
   }
 }
 
@@ -265,6 +278,7 @@ function wrongAnswer() {
   p++;
   wrongScore++;
   createNextButton();
+  var create;
   div.appendChild(nextButton);
   rightWrongMiddle();
 }
