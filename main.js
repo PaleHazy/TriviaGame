@@ -42,11 +42,10 @@ var answers = [
 ];
 var correctAnswerLocator;
 
-// can set all right naswers to a : ... and then while appending set them to random
 var interval;
 var qc = document.getElementById('questionContainer');
 var ac = document.getElementById('answersContainer');
-var timer = 10;
+var timer = 1000;
 var i = 0;
 var bClick;
 var buttonStart = document.getElementById('start');
@@ -60,7 +59,6 @@ function emptyDiv(container) {
 }
 
 function randomizer() {
-  //var randomQuestionPicker = Math.floor(Math.random() * questions.length);
   console.log(randomQuestionPicker);
   question = questions[randomQuestionPicker];
   questions.splice(randomQuestionPicker, 1);
@@ -179,14 +177,7 @@ function startGame() {
   }
 }
 
-//var keys = Object.keys([objectHere])
-//sample val: ["a", "b", "c", "d"]
 function creator() {
-  // if () {
-  //   // document.createElement('div')
-  //   // document.getElementById('questionContainer');
-  //   console.log('oiiiiiiii boiiii');
-  // }
   removeQuestion();
   setQuestion();
   removeAnswers();
@@ -195,37 +186,11 @@ function creator() {
   i++;
 }
 
-//everytime pending response for question add a
-// key image as the outer background
-
-// everytime answer is called and you are on right wrong screen
-// add the inner container bg picture as a key picture relevant to the answer
-
-//array (machine gun magazine)
-//loop splicing at index 0 until the length of the array is equal to zero
-//is a machine gun loop
-
 var middleDiv = document.createElement('div');
 middleDiv.classList.add('middleDiv');
 document.body.append(middleDiv);
 function rightWrongMiddle() {
-  // var referenceNode = document.getElementsByClassName('wrongExplanation')[0];
-  // var containerNode = document.getElementsByClassName(
-  //   'wrongAnswerResponded'
-  // )[0];
-  // console.log('containerNode:', containerNode);
-  // console.log('referenceNode:', referenceNode);
-  // containerNode.insertBefore(middleDiv, referenceNode);
   raw();
-  // var wrongBannerText = document.getElementsByClassName('wrongBanner')[0];
-  // console.log('wrongBannerText:', wrongBannerText);
-  //   if (wrongBannerText.innerText === 'Right Answer!') {
-  //     console.log('ayyee buoi');
-  //     raw();
-  //   } else {
-  //     console.log('no buoi');
-  //     war();
-  //   }
 }
 
 function boxCreate() {}

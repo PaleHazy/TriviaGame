@@ -61,9 +61,8 @@ body {
 }
 
 .cta {
-  animation-name: insertButtons;
-  animation-duration: 1s;
-  animation-iteration-count: 1;
+  animation: insertButtons 700ms, glowB 0.5s alternate infinite;
+
   clear: both;
   margin: 20px;
   /* display: inline-block; */
@@ -71,6 +70,14 @@ body {
   border-bottom: 0;
   box-shadow: 0 0 0 2px #60e215 inset;
   background-color: rgba(36, 4, 180, 0.589);
+}
+@keyframes glowB {
+  from {
+    transform: scale(1.16789);
+  }
+  to {
+    transform: scale(1.1933);
+  }
 }
 @keyframes insertButtons {
   from {
@@ -182,7 +189,7 @@ a {
 
 .miniBoxCorrect {
   background-color: #60e215;
-  animation-duration: 1s;
+
   height: 20px;
   width: 20px;
   margin-left: 15px;
